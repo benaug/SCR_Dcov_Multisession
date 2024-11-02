@@ -45,21 +45,17 @@ init.SCR.Dcov.Multi.Mb <-
     
     y.p <- y.c <- array(0,dim=c(N.session,M.max,J.max))
     K1D.p <- K1D.c <- array(0,dim=c(N.session,M.max,J.max))
-    K3D <- array(NA,dim=c(N.session,J.max,K.max))
-    for(g in 1:N.session){
-      K3D[g,1:J[g],1:K[g]] <- 1
-    }
     for(g in 1:N.session){
       for(i in 1:M[g]){
         for(j in 1:J[g]){
           position <- Position(y[g,i,j,],f=function(x){x>0})#occasion of first capture, NA if no capture
           if(is.na(position)){#no capture
-            K1D.p[g,i,j] <- sum(K3D[g,j,1:K[g]]) #sum trap op
+            K1D.p[g,i,j] <- sum(K2D[g,j,1:K[g]]) #sum trap op
             K1D.c[g,i,j] <- 0 #no subsequent capture events
           }else{#there is a first capture
-            K1D.p[g,i,j] <- sum(K3D[g,j,1:position]) #sum trap op up to first capture event
+            K1D.p[g,i,j] <- sum(K2D[g,j,1:position]) #sum trap op up to first capture event
             if(position<K[g]){#was first capture not last occasion?
-              K1D.c[g,i,j] <- sum(K3D[g,j,(position+1):K[g]]) #sum trap op after first capture event for subsequent capture
+              K1D.c[g,i,j] <- sum(K2D[g,j,(position+1):K[g]]) #sum trap op after first capture event for subsequent capture
             }else{#otherwise, no subsequent capture events
               K1D.c[g,i,j] <- 0
             }
@@ -80,13 +76,13 @@ init.SCR.Dcov.Multi.Mb <-
           if(sum(y.check)>0){
             if(y.p[g,i,j]!=1)stop("bug in y1")
             if(y.c[g,i,j]!=(sum(y.check)-1))stop("bug in y2")
-            first.cap.k.on <- which(y.check[K3D[g,j,]==1]==1)[1] #first capture occasion counting only operable occasions
+            first.cap.k.on <- which(y.check[K2D[g,j,]==1]==1)[1] #first capture occasion counting only operable occasions
             if(K1D.p[g,i,j]!=first.cap.k.on)stop("bug in K1D.p")
-            if(K1D.c[g,i,j]!=(sum(K3D[g,j,1:K[g]])-first.cap.k.on))stop("bug in K1D.c")
+            if(K1D.c[g,i,j]!=(sum(K2D[g,j,1:K[g]])-first.cap.k.on))stop("bug in K1D.c")
           }else{
             if(y.p[g,i,j]!=0)stop("bug in y1")
             if(y.c[g,i,j]!=0)stop("bug in y2")
-            if(K1D.p[g,i,j]!=sum(K3D[g,j,1:K[g]]))stop("bug in K1D.p")
+            if(K1D.p[g,i,j]!=sum(K2D[g,j,1:K[g]]))stop("bug in K1D.p")
             if(K1D.c[g,i,j]!=0)stop("bug in K1D.c")
           }
         }
