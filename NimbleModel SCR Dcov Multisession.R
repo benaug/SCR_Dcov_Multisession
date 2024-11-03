@@ -3,6 +3,9 @@ NimModel <- nimbleCode({
   # into g indices below, e.g.,
   # sigma.fixed ~ dunif(0,100)
   # can also do random effects or session covariate modeling
+  # must keep session structure below with same names for all parameters
+  # if you add/remove parameters here, add/remove them in the monitored 
+  # parameters and config.nodes.
   for(g in 1:N.session){
     #--------------------------------------------------------------
     # priors

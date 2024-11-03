@@ -4,11 +4,11 @@ library(nimble)
 library(coda)
 source("sim.SCR.Dcov.R") #single session data simulator
 source("sim.SCR.Dcov.Multi.R") #multisession wrapper that pastes together session-level data
-source("init.SCR.Dcov.Multi.R")
-source("NimbleModel SCR Dcov Multisession.R")
-source("NimbleFunctions SCR Dcov Multisession.R")
-source("sSampler Dcov Multisession.R")
-source("mask.check.R")
+source("init.SCR.Dcov.Multi.R") #formats data, constants, etc for nimble
+source("NimbleModel SCR Dcov Multisession.R") #model file
+source("NimbleFunctions SCR Dcov Multisession.R") #custom nimble functions and updates
+source("sSampler Dcov Multisession.R") #custom activity center update
+source("mask.check.R") #function to check the habitat mask
 
 #If using Nimble version 0.13.1 and you must run this line 
 nimbleOptions(determinePredictiveNodesInModel = FALSE)
