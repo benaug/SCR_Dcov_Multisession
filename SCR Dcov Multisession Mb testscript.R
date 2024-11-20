@@ -287,7 +287,7 @@ for(g in 1:N.session){
 for(g in 1:N.session){
   idx <- order(lambda.cell[g,1:n.cells[g]])
   plot(lambda.cell.ests[g,1:n.cells[g]][idx]~lambda.cell[g,1:n.cells[g]][idx],type="l",lwd=2,
-       main=paste("Session",g,"True vs. Estimated Density"))
+       main=paste("Session",g,"True vs. Estimated Density"),ylim=range(lambda.cell.HPDs[g,1:n.cells[g],]))
   lines(lambda.cell.HPDs[g,1:n.cells[g],1][idx]~lambda.cell[g,1:n.cells[g]][idx],lty=2)
   lines(lambda.cell.HPDs[g,1:n.cells[g],2][idx]~lambda.cell[g,1:n.cells[g]][idx],lty=2)
   abline(0,1,col="darkred",lwd=2) #1:1 expectation
