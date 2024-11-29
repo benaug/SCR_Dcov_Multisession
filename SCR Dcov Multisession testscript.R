@@ -29,7 +29,7 @@ sigma <- rep(0.50,N.session) #detection spatial scale
 K <- c(10,11,9) #number of occasions per session
 buff <- rep(3,N.session) #state space buffer. Should be at least 3 sigma (generally).
 
-#make an SCR trapping array surrounded by USCR traps. Making the trapping array size vary by session
+#make an SCR trapping array. Making the trapping array size vary by session
 X <- vector("list",N.session)
 X[[1]] <- as.matrix(expand.grid(1:9,1:9))
 X[[2]] <- as.matrix(expand.grid(1:8,1:8))
@@ -207,7 +207,7 @@ for(g in 1:N.session){
                   type = 'AF_slice',control=list(adaptive=TRUE),silent = TRUE)
   #AF_slice causes larger slowdown in run time. May still be worth it. But RW_block is faster.
   #Not sure which is most efficient in terms of effective sample size/unit time
-  conf$addSampler(target = c(paste0("p0[",g,"]"),paste0("sigma[",g,"]")), #p0.USCR
+  conf$addSampler(target = c(paste0("p0[",g,"]"),paste0("sigma[",g,"]")),
                   type = 'RW_block',control=list(adaptive=TRUE),silent = TRUE)
   
 }
